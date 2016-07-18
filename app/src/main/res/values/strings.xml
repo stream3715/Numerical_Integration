@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Numerical Integration</string>
     <string name="bt_apply">APPLY</string>
+    <string name="n0">0</string>
+    <string name="n1">1</string>
+    <string name="label_fx">f(x):</string>
+    <string name="label_f_x2">x^2+</string>
+    <string name="label_f_x">x+</string>
 </resources>

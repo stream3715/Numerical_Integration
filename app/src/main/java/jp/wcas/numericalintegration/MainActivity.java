@@ -2,17 +2,17 @@ package jp.wcas.numericalintegration;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    static double x2, x, real;
     private TestView testView;
-    Button bt_apply;
-    EditText x2Text, xText, realText;
-    static Editable x2, x, real ;
+    private EditText x2Text;
+    private EditText xText;
+    private EditText realText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +22,42 @@ public class MainActivity extends AppCompatActivity {
         xText = (EditText) this.findViewById(R.id.xedit);
         realText = (EditText) this.findViewById(R.id.realedit);
         testView = (TestView) this.findViewById(R.id.test_view);
-        bt_apply = (Button) findViewById(R.id.bt_apply);
-        bt_apply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                x2 = x2Text.getText();
-                x = xText.getText();
-                real = realText.getText();
+        Button bt_apply = (Button) findViewById(R.id.bt_apply);
+        bt_apply.setOnClickListener(this);
+
+
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_apply: {
+                try {
+                    x2 = Double.parseDouble(x2Text.getText().toString());
+                } catch (NullPointerException n) {
+                    x2Text.setText(0);
+                    x2 = Double.parseDouble(xText.getText().toString());
+                } catch (NumberFormatException f) {
+                    return;
+                }
+                try {
+                    x = Double.parseDouble(xText.getText().toString());
+                } catch (NullPointerException n) {
+                    xText.setText(0);
+                    x = Double.parseDouble(xText.getText().toString());
+                } catch (NumberFormatException f) {
+                    return;
+                }
+                try {
+                    real = Double.parseDouble(realText.getText().toString());
+                } catch (NullPointerException n) {
+                    realText.setText(0);
+                    real = Double.parseDouble(xText.getText().toString());
+                } catch (NumberFormatException f) {
+                    return;
+                }
                 testView.invalidate();
             }
-        });
+            break;
+        }
     }
 }
