@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Numerical Integration</string>
+    <string name="bt_apply">APPLY</string>
+</resources>
