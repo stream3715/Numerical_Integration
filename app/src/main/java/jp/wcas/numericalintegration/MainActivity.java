@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    static double x2, x, real;
+    static Float x2, x, real;
     private TestView testView;
     private EditText x2Text;
     private EditText xText;
@@ -32,26 +32,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bt_apply: {
                 try {
-                    x2 = Double.parseDouble(x2Text.getText().toString());
+                    x2 = Float.valueOf(x2Text.getText().toString());
                 } catch (NullPointerException n) {
                     x2Text.setText(0);
-                    x2 = Double.parseDouble(xText.getText().toString());
+                    x2 = Float.valueOf(xText.getText().toString());
                 } catch (NumberFormatException f) {
                     return;
                 }
                 try {
-                    x = Double.parseDouble(xText.getText().toString());
+                    x = Float.valueOf(xText.getText().toString());
                 } catch (NullPointerException n) {
                     xText.setText(0);
-                    x = Double.parseDouble(xText.getText().toString());
+                    x = Float.valueOf(xText.getText().toString());
                 } catch (NumberFormatException f) {
                     return;
                 }
                 try {
-                    real = Double.parseDouble(realText.getText().toString());
+                    real = Float.valueOf(realText.getText().toString());
                 } catch (NullPointerException n) {
                     realText.setText(0);
-                    real = Double.parseDouble(xText.getText().toString());
+                    real = Float.valueOf(xText.getText().toString());
                 } catch (NumberFormatException f) {
                     return;
                 }

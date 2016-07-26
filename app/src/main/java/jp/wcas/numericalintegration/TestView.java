@@ -8,11 +8,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class TestView extends View {
 
     private Paint paint;
+    List magnilist = new ArrayList();
 
 
     public TestView(Context context, AttributeSet attrs) {
@@ -43,10 +46,10 @@ public class TestView extends View {
         canvas.drawLine(-x0, 0, x0, 0, paint);
         Log.d(TAG, "Y drawn");
 
-        int x = -(10), x_finish = Math.abs(x);
+        int x = -(getWidth()), x_finish = Math.abs(x);
+        //int x = -10, x_finish = Math.abs(x);
 
-
-        double f_x2, f_x, f_real;
+        float f_x2, f_x, f_real;
 
         try {
             f_x2 = MainActivity.x2;
@@ -66,35 +69,48 @@ public class TestView extends View {
             f_real = 0;
         }
 
-        double[] checkmagni = {Math.abs(f_x2), Math.abs(f_x), Math.abs(f_real)};
-        Arrays.sort(checkmagni);
-        Log.d(TAG, checkmagni[0] + " " + checkmagni[1] + " " + checkmagni[2]);
 
-        int magni = 1;
-        double magni_d = 1;
-        boolean magni0 = false;
+        Collections.addAll(magnilist, Math.abs(f_x2), Math.abs(f_x), Math.abs(f_real));
+        Collections.sort(magnilist);
+        Log.d(TAG, magnilist.get(0) + " " + magnilist.get(1) + " " + magnilist.get(2));
+
+        float magni_d = 1;
+
 
         Log.d(TAG, "magni check started..");
 
-        for (int i = 0; i <= 2; ++i) {
-            if (checkmagni[i] == 0.0) {
-                magni0 = true;
+        if (Math.abs(f_x2) < 1 | Math.abs(f_x) < 1 | Math.abs(f_real) < 1) {
+            boolean no_magni = false;
+            for (int i = 0; i <= 2; ++i) {
+                if ((float) magnilist.get(i) == 0.0) {
+                    no_magni = true;
+                }
+                if (!no_magni) {
+                    magni_d = (1 / (float) magnilist.get(i));
+                    Log.d(TAG, magni_d + "");
+                }
+                no_magni = false;
+                Log.d(TAG, i + " Finish");
             }
-            if (!magni0) {
-                magni = (int) (1 / checkmagni[i]);
-                magni_d = (1 / checkmagni[i]);
-                Log.d(TAG, magni_d + "");
-            }
-            magni0 = false;
-            Log.d(TAG, i + " Finish");
+
+            Log.d(TAG, "magni check finished..");
         }
 
-        Log.d(TAG, "magni check finished..");
+        if (Math.abs(f_x2) > 1 | Math.abs(f_x) > 1 | Math.abs(f_real) > 1) {
+            Collections.reverse(magnilist);
+            if ((float) magnilist.get(0) != 0.0) {
+                magni_d = (1 / (float) magnilist.get(0));
+                Log.d(TAG, magni_d + "");
+            }
+            Log.d(TAG, " Finish");
 
-        int x_magni = magni, y_magni = magni;
 
-        double x_previous = (x * x_magni), y_previous = ((f_x2 * x * x) + (f_x * x) + (f_real)) * (-1) * y_magni;
-        paint = new Paint();
+            Log.d(TAG, "magni check finished..");
+        }
+
+        float x_magni = 50 * magni_d, y_magni = 50 * magni_d;
+
+        float x_previous = (x * x_magni), y_previous = ((f_x2 * x * x) + (f_x * x) + (f_real)) * (-1) * y_magni;
 
         {
             paint.setColor(Color.RED);
@@ -102,30 +118,53 @@ public class TestView extends View {
             paint.setAntiAlias(true);
         }
 
-        for (int n = x; n <= x_finish; n++) {
-            double y = ((f_x2 * n * n) + (f_x * n) + f_real) * (-1);
-            Log.d(TAG, (n) + ":" + (y) + ", magni:" + magni + ", magni_d:" + magni_d);
-            canvas.drawLine((int) x_previous, (int) y_previous, n * x_magni, (int) (y * y_magni), paint);
+        for (float n = x; n <= x_finish; n = (float) (n + (0.1))) {
+            float y = ((f_x2 * n * n) + (f_x * n) + f_real) * (-1);
+            Log.d(TAG, (n) + ":" + (y) + ", magni_d:" + magni_d);
+            canvas.drawLine(x_previous, y_previous, (n * x_magni), (y * y_magni), paint);
             x_previous = n * x_magni;
             y_previous = y * y_magni;
         }
 
-        int gridX = x_magni;
         int gridY = (int) (((f_x2 * 1) + (f_x * 1) + (f_real)) * (-1) * y_magni);
+        int gridminusY = (int) (((f_x2) + (f_x * -1) + (f_real)) * (-1) * y_magni);
 
         paint.setColor(Color.BLACK);
         paint.setAntiAlias(false);
-        canvas.drawLine(gridX, gridY, gridX, 0, paint);
-        canvas.drawLine(-gridX, gridY, -gridX, 0, paint);
-        canvas.drawLine(gridX, gridY, -gridX, gridY, paint);
+        canvas.drawLine(x_magni, gridY, x_magni, 0, paint);
+        canvas.drawLine(-x_magni, gridminusY, -x_magni, 0, paint);
 
         paint.setTextSize(30);
-        for (int i = 0; i < 1000; i = i + 2) {
-            canvas.drawText("" + i, gridX * i, -10, paint);
-        }
 
-        for (int i = -2; i > -1000; i = i - 2) {
-            canvas.drawText("" + i, gridX * i, -10, paint);
+        Collections.sort(magnilist);
+        if (Math.abs(f_x2) != 0) {
+
+            if (Math.abs(f_x2) == 1) {
+                for (int i = -1000; i < 1000; i = i + 5) {
+                    canvas.drawText("" + i, x_magni * i, -10, paint);
+                }
+            } else if (Math.abs(f_x2) < 1) {
+                for (int i = -1000; i < 1000; i = i + 5) {
+                    canvas.drawText("" + i, x_magni * i, -10, paint);
+                }
+            } else if (Math.abs(f_x2) > 1 && Math.abs(f_x2) < 10) {
+                for (float i = -1000; i < 1000; i = i + 5) {
+                    Collections.reverse(magnilist);
+                    canvas.drawText("" + ((float) magnilist.get(0) * i), (float) magnilist.get(0) * x_magni * i, -10, paint);
+                }
+            } else if (Math.abs(f_x2) >= 10) {
+                for (float i = -1000; i < 1000; i = i + 5) {
+                    Collections.reverse(magnilist);
+                    canvas.drawText("" + ((float) magnilist.get(0) * i), (float) magnilist.get(0) * x_magni * i, -10, paint);
+                }
+            }
+
+        } else if (Math.abs(f_x2) == 0) {
+            for (float i = -1000; i < 1000; i = i + 5) {
+                Collections.reverse(magnilist);
+                canvas.drawText("" + ((float) magnilist.get(0) * i), (float) magnilist.get(0) * x_magni * i, -10, paint);
+            }
         }
+        Log.d(TAG, "draw finished");
     }
 }

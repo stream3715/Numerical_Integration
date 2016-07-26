@@ -2,7 +2,9 @@
   <dictionary name="strea">
     <words>
       <w>checkmagni</w>
+      <w>gridminus</w>
       <w>magni</w>
+      <w>magnilist</w>
       <w>realedit</w>
       <w>xedit</w>
     </words>
