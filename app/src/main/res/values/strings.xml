@@ -1,9 +1,23 @@
 <resources>
     <string name="app_name">Numerical Integration</string>
+    <!-- main strings -->
     <string name="bt_apply">APPLY</string>
     <string name="n0">0</string>
     <string name="n1">1</string>
     <string name="label_fx">f(x):</string>
     <string name="label_f_x2">x^2+</string>
     <string name="label_f_x">x+</string>
+    <string name="opt_menu_01">設定</string>
+    <string name="opt_menu_02">終了</string>
+
+    <!-- preference strings -->
+    <string name="preference_title">設定</string>
+
+    <string name="list_01_title">区間分割設定</string>
+    <string name="list_01_summary">計算対象区間の分割数を設定します</string>
+    <string name="edit_02_title">開始x値</string>
+    <string name="edit_02_summary">計算対象の開始点のx座標を設定します</string>
+    <string name="edit_03_title">終了x値</string>
+    <string name="edit_03_summary">計算対象の終了点のx座標を設定します</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>
