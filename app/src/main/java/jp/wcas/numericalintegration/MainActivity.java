@@ -54,27 +54,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_apply: {
                 try {
                     x2 = Float.valueOf(x2Text.getText().toString());
-                } catch (NullPointerException n) {
-                    x2Text.setText(0);
-                    x2 = Float.valueOf(xText.getText().toString());
                 } catch (NumberFormatException f) {
-                    return;
+                    x2Text.setText("0");
+                    x2 = Float.valueOf(x2Text.getText().toString());
                 }
                 try {
                     x = Float.valueOf(xText.getText().toString());
-                } catch (NullPointerException n) {
-                    xText.setText(0);
-                    x = Float.valueOf(xText.getText().toString());
                 } catch (NumberFormatException f) {
-                    return;
+                    xText.setText("0");
+                    x = Float.valueOf(xText.getText().toString());
                 }
                 try {
                     real = Float.valueOf(realText.getText().toString());
-                } catch (NullPointerException n) {
-                    realText.setText(0);
-                    real = Float.valueOf(xText.getText().toString());
                 } catch (NumberFormatException f) {
-                    return;
+                    realText.setText("0");
+                    real = Float.valueOf(realText.getText().toString());
                 }
                 testView.invalidate();
             }

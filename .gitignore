@@ -35,3 +35,8 @@ local.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
+app/app-debug.apk
+app/libs/
+app/src/main/res/array/
+app/src/main/res/drawable/
+build/
