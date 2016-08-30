@@ -1,6 +1,8 @@
 package jp.wcas.numericalintegration;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.preference.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -16,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText x2Text;
     private EditText xText;
     private EditText realText;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.optionsMenu_01:
-                Intent preference = new android.content.Intent(this, Preferences.class);
+                Intent preference = new android.content.Intent(MainActivity.this, Preferences.class);
                 startActivity(preference);
                 return true;
             case R.id.optionsMenu_02:
@@ -71,8 +75,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     real = Float.valueOf(realText.getText().toString());
                 }
                 testView.invalidate();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                String sum = String.valueOf(calcsimpson(x2, x, real));
+                builder.setMessage(sum)
+                        .setTitle("面積");
+
+                AlertDialog dialog = builder.create();
             }
             break;
         }
     }
+
+    private float calcsimpson(float x2, float x, float real) {
+        PreferenceManager.getDefaultSharedPreferences(this);
+
+        String divide = pref.getString("@string/list01", "1");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(divide);
+        AlertDialog dialog = builder.create();
+        int div = Integer.parseInt(divide);
+        float min = pref.getFloat("@string/edit01", 0.0F);
+        float max = pref.getFloat("@string/edit02", 10.0F);
+
+        // float h = (max - min) / (2 * div);
+
+
+        //float sum = h;
+        return (max - min) / (2 * div);
+    }
+
 }

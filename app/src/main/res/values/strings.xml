@@ -15,9 +15,14 @@
 
     <string name="list_01_title">区間分割設定</string>
     <string name="list_01_summary">計算対象区間の分割数を設定します</string>
-    <string name="edit_02_title">開始x値</string>
-    <string name="edit_02_summary">計算対象の開始点のx座標を設定します</string>
-    <string name="edit_03_title">終了x値</string>
-    <string name="edit_03_summary">計算対象の終了点のx座標を設定します</string>
+    <string name="edit_02_title">最小x値</string>
+    <string name="edit_02_summary">計算対象の最小x値を設定します</string>
+    <string name="edit_03_title">最大x値</string>
+    <string name="edit_03_summary">計算対象の最大x値を設定します</string>
     <string name="title_activity_settings">Settings</string>
+
+    <string name="list01">list_01_key</string>
+    <string name="edit01">edit_01_key</string>
+    <string name="edit02">edit_02_key</string>
+
 </resources>
